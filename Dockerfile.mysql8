@@ -1,0 +1,15 @@
+FROM amazonlinux:2
+RUN amazon-linux-extras install -y epel
+RUN yum install -y https://dev.mysql.com/get/mysql84-community-release-el7-1.noarch.rpm
+RUN yum install -y perl-core make less gcc tree curl gzip tar \
+    rpm-build cpanspec \
+    'perl(Test::Deep)' \
+    mysql-community-client \
+    mysql-community-devel
+RUN curl -L https://cpanmin.us | perl - App::cpanminus
+RUN cd /root; cpanspec --packager bigfoot@cpan.org DBD::mysql
+RUN mkdir -p /root/rpmbuild/{RPMS,SOURCES,SRPMS,BUILD,BUILDROOT,SPECS}
+RUN cp /root/DBD-mysql-*.tar.gz /root/rpmbuild/SOURCES/
+RUN cpanm -n -v Devel::CheckLib
+RUN cd /root;  rpmbuild -ba perl-DBD-mysql.spec 
+

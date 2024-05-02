@@ -1,0 +1,8 @@
+Thu May  2 10:49:47 2024  Rob Lauer  <rlauer6@comcast.net>
+
+	[BigBang]:
+	* .gitignore: new
+	* Dockerfile.mysql8
+	* Makefile: new
+	* README.md: new
+
